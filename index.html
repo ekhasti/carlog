@@ -84,6 +84,7 @@ h2{font:600 18px/1.2 var(--font-display)}
 .btn.small{min-height:36px;padding:0 12px;font-size:13.5px}
 .btn:disabled{opacity:.55;cursor:default}
 .btn svg,.fab svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn .google-icon{width:18px;height:18px;flex:0 0 18px;fill:none;stroke:none}
 .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
 .actions .btn{flex:1 1 140px}
 
@@ -255,7 +256,7 @@ dialog#sheet::backdrop{background:rgba(6,14,20,.6)}
   <button data-act="tab" data-tab="money"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M14.6 9.3c-.6-.8-1.5-1.3-2.7-1.3-1.5 0-2.6.8-2.6 2 0 2.9 5.4 1.3 5.4 4.2 0 1.2-1.1 2-2.7 2-1.2 0-2.2-.5-2.8-1.4"/><path d="M12 6.4V8m0 8v1.6"/></svg>Money</button>
   <button data-act="tab" data-tab="service"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.1L4 16.7 7.3 20l5.3-5.3a4 4 0 0 0 5.1-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg>Service</button>
   <button data-act="tab" data-tab="data"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</button>
-</div><div class="app-footer"><span>Created By: Kadir-ekhasti</span><span>Version: v2026.10.05</span></div></nav>
+</div><div class="app-footer"><span>Created By: Kadir-ekhasti</span><span>Version: v2026.10.08</span></div></nav>
 
 <dialog id="sheet" aria-label="Modal"></dialog>
 <div id="print-report"></div>
@@ -958,7 +959,7 @@ function restoreFromJson(e) {
    Data is stored as one JSON file inside the signed-in user's own Google Drive, in the hidden
    "appDataFolder" (scope drive.appdata). No server of our own. Paste your OAuth Client ID below,
    or paste it once inside Settings (saved in this browser). */
-const SYNC_CLIENT_ID = '';   // e.g. '1234567890-abc123.apps.googleusercontent.com'
+const SYNC_CLIENT_ID = '1022953895837-l5t0qckvvchb4uf8kvjo3hkvhbqkv9gl.apps.googleusercontent.com';   // e.g. '1234567890-abc123.apps.googleusercontent.com'
 const SYNC_SCOPE = 'https://www.googleapis.com/auth/drive.appdata';
 const SYNC_FILE = 'carlog-backup.json';
 const Sync = { token: null, exp: 0, busy: false, timer: null, msg: '', applying: false, gis: null };
@@ -1145,9 +1146,8 @@ function syncCardHTML() {
     body = `<p class="small muted" style="margin:4px 0 10px">Setup needed: paste your Google <b>Client ID</b> here (one time).</p>
       <div style="display:flex;gap:8px"><input id="sync-cid" type="text" placeholder="xxxx.apps.googleusercontent.com" autocomplete="off" style="${inp}"><button class="btn small" data-act="sync-save-cid">Save</button></div>`;
   } else if (!st.enabled) {
-    body = `<p class="small muted" style="margin:4px 0 10px">Sign in with Google. Your data is saved in your own Google Drive (hidden app folder) and syncs to any other device using the same login.</p>
-      <div class="btn-grid"><button class="btn small" data-act="sync-signin">Sign in with Google</button></div>
-      ${Sync.msg ? `<p class="small" style="margin-top:8px;color:var(--late)">${esc(Sync.msg)}</p>` : ''}`;
+    body = `<div style="display:flex;justify-content:center;margin-top:12px"><button class="btn small" data-act="sync-signin" style="width:auto;min-width:200px"><svg class="google-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M21.35 12.27c0-.72-.06-1.42-.18-2.09H12v3.95h5.24a4.48 4.48 0 0 1-1.94 2.94v2.45h3.14c1.84-1.69 2.91-4.18 2.91-7.25z"/><path fill="#34A853" d="M12 21.75c2.63 0 4.84-.87 6.45-2.35l-3.14-2.45c-.87.58-1.98.92-3.31.92-2.54 0-4.69-1.72-5.46-4.03H3.29v2.53A9.75 9.75 0 0 0 12 21.75z"/><path fill="#FBBC05" d="M6.54 13.84A5.86 5.86 0 0 1 6.23 12c0-.64.11-1.26.31-1.84V7.63H3.29A9.75 9.75 0 0 0 2.25 12c0 1.57.38 3.05 1.04 4.37l3.25-2.53z"/><path fill="#EA4335" d="M12 6.13c1.43 0 2.72.49 3.73 1.45l2.8-2.8C16.84 3.14 14.63 2.25 12 2.25a9.75 9.75 0 0 0-8.71 5.38l3.25 2.53C7.31 7.85 9.46 6.13 12 6.13z"/></svg>Sign in with Google</button></div>
+      ${Sync.msg ? `<p class="small" style="margin-top:8px;text-align:center;color:var(--late)">${esc(Sync.msg)}</p>` : ''}`;
   } else {
     const last = st.lastSync ? new Date(st.lastSync).toLocaleString([], { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }) : 'Never';
     body = `<p class="small muted" style="margin:4px 0 10px">Login: <b>${esc(st.email || 'Google account')}</b> &bull; Last sync: <b>${esc(last)}</b>${tokenValid() ? '' : ' &bull; <b>Reconnect needed</b>'}</p>
@@ -1156,9 +1156,9 @@ function syncCardHTML() {
   }
   return `
         <div class="switch-card">
-          <div class="switch-card-header">
-            <span class="switch-badge">☁️ Google Drive Sync (Free)</span>
-            <span class="small muted">${st.enabled ? 'ON' : 'OFF'}</span>
+          <div class="switch-card-header"${st.enabled ? '' : ' style="justify-content:center"'}>
+            <span class="switch-badge">☁️ Google Drive Sync</span>
+            ${st.enabled ? '<span class="small muted">ON</span>' : ''}
           </div>
           ${body}
         </div>
@@ -1558,29 +1558,48 @@ function svcRow(it, full) {
   return h + '</div>';
 }
 
+function fmtStamp(ms) {
+  const d = new Date(ms);
+  return ymd(d) + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
 function backupSection() {
-  const lastBackupTxt = S.meta && S.meta.lastBackup ? S.meta.lastBackup : 'Never';
+  const lastLocal = S.meta && S.meta.lastBackup ? S.meta.lastBackup : 'Never';
+  const st = syncState(), cid = syncClientId();
+  const lastDrive = st.enabled && st.lastSync ? fmtStamp(st.lastSync) : 'Never';
+  const bs = 'width:100%;max-width:260px;margin-top:0';
+  let third = '', after = '';
+  if (!cid) {
+    after = `<div style="width:100%;text-align:left;margin-top:6px">${syncCardHTML()}</div>`;
+  } else if (st.enabled) {
+    third = `<button class="btn ghost" data-act="sync-now" style="${bs}">${Sync.busy ? 'Syncing…' : 'Sync now'}</button>`;
+    after = `<p class="small muted" style="text-align:center;margin-top:2px">Signed in as <b>${esc(st.email || 'Google account')}</b>${tokenValid() ? '' : ' &bull; Reconnect needed'}</p>
+      <button class="btn small ghost" data-act="sync-signout" style="margin-top:0">Sign out</button>`;
+  } else {
+    third = `<button class="btn ghost" data-act="sync-signin" style="${bs}"><svg class="google-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M21.35 12.27c0-.72-.06-1.42-.18-2.09H12v3.95h5.24a4.48 4.48 0 0 1-1.94 2.94v2.45h3.14c1.84-1.69 2.91-4.18 2.91-7.25z"/><path fill="#34A853" d="M12 21.75c2.63 0 4.84-.87 6.45-2.35l-3.14-2.45c-.87.58-1.98.92-3.31.92-2.54 0-4.69-1.72-5.46-4.03H3.29v2.53A9.75 9.75 0 0 0 12 21.75z"/><path fill="#FBBC05" d="M6.54 13.84A5.86 5.86 0 0 1 6.23 12c0-.64.11-1.26.31-1.84V7.63H3.29A9.75 9.75 0 0 0 2.25 12c0 1.57.38 3.05 1.04 4.37l3.25-2.53z"/><path fill="#EA4335" d="M12 6.13c1.43 0 2.72.49 3.73 1.45l2.8-2.8C16.84 3.14 14.63 2.25 12 2.25a9.75 9.75 0 0 0-8.71 5.38l3.25 2.53C7.31 7.85 9.46 6.13 12 6.13z"/></svg>Sign in with Google</button>`;
+  }
+  if (cid && Sync.msg) after += `<p class="small" style="text-align:center;margin-top:2px;color:var(--late)">${esc(Sync.msg)}</p>`;
   return `
     <section class="sec" id="data-hub-sec">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
         <h2>Data Management & Sync</h2>
-        <span class="small muted" style="font-weight:600">Dedicated Switches</span>
-      </div>
+       </div>
 
       <div class="panel pad" style="display:flex;flex-direction:column;gap:14px">
-        ${syncCardHTML()}
-        <!-- 1. Local File Offline Backup Switches -->
+        <!-- 1. Backup & Restore (local file + Google Drive) -->
         <div class="switch-card">
           <div class="switch-card-header">
-            <span class="switch-badge">💾 Device Backup & Restore (Offline Safe)</span>
+            <span class="switch-badge">💾 Device Backup & Restore</span>
             <span class="small muted">JSON</span>
           </div>
-          <p class="small muted" style="margin:4px 0 10px">
-            100% offline backup for all cars, services & records &bull; Last backup: <b>${esc(lastBackupTxt)}</b>
+          <p class="small muted" style="margin:4px 0 12px">
+            Last backup<br>Local: <b>${esc(lastLocal)}</b><br>Drive: <b>${esc(lastDrive)}</b>
           </p>
-          <div class="btn-grid">
-            <button class="btn small" data-act="download-json">💾 Download Backup</button>
-            <button class="btn small ghost" data-act="upload-json">📂 Restore Backup</button>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+            <button class="btn" data-act="download-json" style="${bs}">Download Backup</button>
+            <button class="btn ghost" data-act="upload-json" style="${bs}">Restore Backup</button>
+            ${third}
+            ${after}
           </div>
         </div>
 
@@ -1589,10 +1608,9 @@ function backupSection() {
           <div class="switch-card-header">
             <span class="switch-badge">📤 Export</span>
           </div>
-          <p class="small muted" style="margin:4px 0 10px">Full 4-sheet Excel workbook or a vehicle summary PDF</p>
-          <div class="btn-grid">
-            <button class="btn small ghost" data-act="export-excel">📥 Export Excel (.xlsx)</button>
-            <button class="btn small ghost" data-act="open-pdf-range-modal">📄 Export PDF Report</button>
+           <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+            <button class="btn small ghost" data-act="export-excel" style="width:100%;max-width:260px">Export Excel</button>
+            <button class="btn small ghost" data-act="open-pdf-range-modal" style="width:100%;max-width:260px">Export PDF</button>
           </div>
         </div>
 
@@ -1699,8 +1717,7 @@ function themeSection() {
           <button type="button" data-act="set-theme" data-theme="dark" aria-pressed="${theme === 'dark'}">🌙 Dark</button>
           <button type="button" data-act="set-theme" data-theme="system" aria-pressed="${theme === 'system'}">⚙️ Follow System</button>
         </div>
-        <p class="small muted" style="margin-top:10px">Follow System automatically switches between Light and Dark according to your device setting.</p>
-      </div>
+       </div>
     </section>
   `;
 }
@@ -1738,13 +1755,13 @@ function payersSection() {
     <section class="sec" id="payers-sec">
       <h2>Companies &amp; Fuel Payers</h2>
       <div class="panel pad" style="margin-top:10px">
-        <p class="small" style="font-weight:600;margin-bottom:2px">Companies (Pending / Received)</p>
+        <p class="small" style="font-weight:600;margin-bottom:2px">Companies</p>
         ${coRows}
         <button class="btn small" style="margin-top:10px" data-act="company-new">+ Switch to a new company</button>
-        <p class="small muted" style="margin-top:8px">When you join a new company, tap this. New fuel and payments are tracked for the new company from zero. The old company stops, and its Pending / Received stays saved under "Previous companies".</p>
+         
         <p class="small" style="font-weight:600;margin:16px 0 2px">Other payers</p>
         ${selfRow}${others}
-        <p class="small muted" style="margin-top:10px">More payers can be added from the <b>Add fill-up</b> screen (Paid by &rarr; + Add new payer).</p>
+        <button class="btn small" style="margin-top:10px" data-act="add-payer">+ Add New Payer</button>
       </div>
     </section>
   `;
@@ -1908,17 +1925,44 @@ function viewService() {
   return h;
 }
 
+const CAR_LOGO = `
+<svg viewBox="0 0 96 96" width="68" height="68" aria-hidden="true">
+  <defs>
+    <linearGradient id="carBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" style="stop-color:var(--company)"/>
+      <stop offset="1" style="stop-color:var(--company);stop-opacity:.72"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="48" cy="75" rx="34" ry="3.2" fill="#000" opacity=".18"/>
+  <path d="M24 47 L32.5 32.5 Q34.3 30 37.4 30 H59 Q62.1 30 63.9 32.5 L72 47 Z" fill="url(#carBody)"/>
+  <path d="M30.5 45 L36.2 35 Q36.9 34 38.2 34 H46 V45 Z" fill="var(--surface)" opacity=".92"/>
+  <path d="M50 34 H58.4 Q59.8 34 60.6 35.1 L66.2 45 H50 Z" fill="var(--surface)" opacity=".92"/>
+  <rect x="11" y="45" width="74" height="18" rx="7" fill="url(#carBody)"/>
+  <rect x="17" y="49" width="62" height="2" rx="1" fill="#fff" opacity=".28"/>
+  <rect x="80" y="50" width="5" height="5" rx="2" fill="#F7C948"/>
+  <rect x="11" y="50" width="4" height="5" rx="2" fill="#E5484D"/>
+  <circle cx="31" cy="64" r="9" fill="var(--ink)"/><circle cx="31" cy="64" r="3.8" fill="var(--surface)"/>
+  <circle cx="65" cy="64" r="9" fill="var(--ink)"/><circle cx="65" cy="64" r="3.8" fill="var(--surface)"/>
+</svg>`;
+
 function viewNoCar() {
+  const st = syncState(), cid = syncClientId();
+  const bs = 'width:100%;max-width:260px;margin-top:0';
+  let third;
+  if (!cid) third = `<div style="width:100%;text-align:left">${syncCardHTML()}</div>`;
+  else if (st.enabled) third = `<button class="btn ghost" data-act="sync-now" style="${bs}">${Sync.busy ? 'Syncing…' : 'Sync now'}</button>`;
+  else third = `<button class="btn ghost" data-act="sync-signin" style="${bs}"><svg class="google-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M21.35 12.27c0-.72-.06-1.42-.18-2.09H12v3.95h5.24a4.48 4.48 0 0 1-1.94 2.94v2.45h3.14c1.84-1.69 2.91-4.18 2.91-7.25z"/><path fill="#34A853" d="M12 21.75c2.63 0 4.84-.87 6.45-2.35l-3.14-2.45c-.87.58-1.98.92-3.31.92-2.54 0-4.69-1.72-5.46-4.03H3.29v2.53A9.75 9.75 0 0 0 12 21.75z"/><path fill="#FBBC05" d="M6.54 13.84A5.86 5.86 0 0 1 6.23 12c0-.64.11-1.26.31-1.84V7.63H3.29A9.75 9.75 0 0 0 2.25 12c0 1.57.38 3.05 1.04 4.37l3.25-2.53z"/><path fill="#EA4335" d="M12 6.13c1.43 0 2.72.49 3.73 1.45l2.8-2.8C16.84 3.14 14.63 2.25 12 2.25a9.75 9.75 0 0 0-8.71 5.38l3.25 2.53C7.31 7.85 9.46 6.13 12 6.13z"/></svg>Sign in with Google</button>`;
   return `
     <section class="panel empty" style="margin-top:10px;padding:34px 16px">
-      <div style="font-size:42px;margin-bottom:10px">🚘</div>
+      <div style="width:96px;height:96px;margin:0 auto 14px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--company) 14%,transparent)">${CAR_LOGO}</div>
       <h2 style="margin-bottom:8px">No car added yet</h2>
-      <p class="muted">This app is completely blank. Add your first car to start recording fuel, payments and service history.</p>
-      <div class="btn-grid" style="margin-top:16px">
-        <button class="btn" data-act="add-car-prompt">${PLUS} Add First Car</button>
-        <button class="btn ghost" data-act="upload-json">📂 Restore Backup</button>
+      <p class="muted">Add your car for history</p>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:20px">
+        <button class="btn" data-act="add-car-prompt" style="${bs}">${PLUS} Add New Car</button>
+        <button class="btn ghost" data-act="upload-json" style="${bs}">Restore Backup</button>
+        ${third}
+        ${cid && Sync.msg ? `<p class="small" style="margin-top:4px;color:var(--late)">${esc(Sync.msg)}</p>` : ''}
       </div>
-      <div style="margin-top:18px;text-align:left">${syncCardHTML()}</div>
     </section>
   `;
 }
@@ -2312,6 +2356,11 @@ const H = {
   },
 
   // Fill actions
+  'add-payer': () => {
+    fillSheet(null);
+    const btn = sheet.querySelector('[data-act="payer-new-toggle"]');
+    if (btn) btn.click();
+  },
   'add-fill': () => fillSheet(null),
   'edit-fill': el => fillSheet(el.dataset.id),
   'save-fill': () => saveFill(),
