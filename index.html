@@ -235,6 +235,9 @@ dialog#sheet::backdrop{background:rgba(6,14,20,.6)}
   .p-card span{font-size:11px;color:#555}
 }
 </style>
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./icon-192.png">
 </head>
 <body>
 <div class="wrap">
@@ -2482,5 +2485,16 @@ if (syncEnabled()) {
 initApp();
 })();
 </script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('./sw.js', {scope: './'}).catch(function (err) {
+      console.warn('CarLog service worker registration failed:', err);
+    });
+  });
+}
+</script>
+
 </body>
 </html>
